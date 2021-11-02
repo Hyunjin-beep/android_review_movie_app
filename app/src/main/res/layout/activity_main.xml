@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -18,18 +19,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="-2dp"
-        android:layout_marginTop="53dp"
-        android:layout_marginEnd="2dp">
-
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp">
 
             <TextView
                 android:id="@+id/tv_title_third"
@@ -52,14 +50,15 @@
                 android:layout_marginTop="188dp"
                 android:text="tv_title_second" />
 
+
             <TextView
                 android:id="@+id/tv_bestsellers"
                 android:layout_width="255dp"
                 android:layout_height="39dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="27dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="17dp"
                 android:text="Bestsellers"
                 android:textSize='30dp' />
 
@@ -71,9 +70,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="170dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="107dp"
                 tools:srcCompat="@tools:sample/avatars" />
-
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -106,10 +104,161 @@
                 android:layout_marginTop="187dp"
                 android:text="tv_title_first" />
 
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="-8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_field_first"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Yes" />
+
+            <Button
+                android:id="@+id/btn_field_second"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="no" />
+
+            <Button
+                android:id="@+id/btn_field_third"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="ss" />
+
+            <Button
+                android:id="@+id/btn_field_fourth"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="ss" />
+
+            <Button
+                android:id="@+id/btn_field_fifth"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="ss" />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="0dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="-2dp">
+
+            <TextView
+                android:id="@+id/tv_field_third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="294dp"
+                android:layout_marginTop="189dp"
+                android:text="tv_title_third" />
+
+
+            <TextView
+                android:id="@+id/tv_field_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="152dp"
+                android:layout_marginTop="188dp"
+                android:text="tv_title_second" />
+
+
+            <TextView
+                android:id="@+id/tv_field"
+                android:layout_width="255dp"
+                android:layout_height="39dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="17dp"
+                android:text="Field"
+                android:textSize='30dp' />
+
+            <ImageView
+                android:id="@+id/imageView2_field"
+                android:layout_width="68dp"
+                android:layout_height="79dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="170dp"
+                android:layout_marginTop="107dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageView
+                android:id="@+id/imageView3_field"
+                android:layout_width="68dp"
+                android:layout_height="79dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="298dp"
+                android:layout_marginTop="99dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageView
+                android:id="@+id/imageView_field"
+                android:layout_width="68dp"
+                android:layout_height="79dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="101dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_field_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="187dp"
+                android:text="tv_title_first" />
 
         </RelativeLayout>
 
     </ScrollView>
+
+
 
 
 </RelativeLayout>

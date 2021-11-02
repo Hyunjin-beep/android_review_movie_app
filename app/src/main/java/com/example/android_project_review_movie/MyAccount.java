@@ -1,21 +1,18 @@
 package com.example.android_project_review_movie;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MyAccount extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my_account);
 
         Toolbar myToolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -23,21 +20,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item){
-        if(item.getItemId() == R.id.menu_account){
-            Intent intent = new Intent(MainActivity.this, MyAccount.class);
-            startActivity(intent);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflate the options menu
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_menu, menu);
+        inflater.inflate(R.menu.activity_account, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 }
