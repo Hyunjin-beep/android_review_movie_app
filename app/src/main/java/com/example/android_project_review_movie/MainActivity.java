@@ -3,15 +3,40 @@ package com.example.android_project_review_movie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String movie_db_url = "https://api.themoviedb.org/3/movie/popular?api_key=a7dab8c476fb31214a42e7867fa023b2";
+    private String movie_db_genres = "https://api.themoviedb.org/3/discover/movie?api_key=a7dab8c476fb31214a42e7867fa023b2&with_genres=";
+
+    Button btn_action, btn_drama, btn_comedy, btn_fantasy, btn_mystery;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +45,35 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        ParseDBURL parseDBURL = new ParseDBURL();
+        parseDBURL.execute(movie_db_url);
 
+        btn_action = findViewById(R.id.btn_field_action);
+        btn_comedy = findViewById(R.id.btn_field_comedy);
+        btn_drama = findViewById(R.id.btn_field_drama);
+        btn_fantasy = findViewById(R.id.btn_field_fantasy);
+        btn_mystery = findViewById(R.id.btn_field_mystery);
+
+        btn_action.setOnClickListener(new buttonTestSecond(28));
+        btn_comedy.setOnClickListener(new buttonTestSecond(35));
+        btn_drama.setOnClickListener(new buttonTestSecond(18));
+        btn_fantasy.setOnClickListener(new buttonTestSecond(14));
+        btn_mystery.setOnClickListener(new buttonTestSecond(9648));
+
+    }
+
+
+    private class buttonTestSecond implements View.OnClickListener {
+        int genre_code;
+        public buttonTestSecond(int genre_code) {
+            this.genre_code = genre_code;
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            Toast.makeText(MainActivity.this, String.valueOf(this.genre_code), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -39,5 +92,90 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private class ParseDBURL extends AsyncTask<String, String, String> {
+        ArrayList<MovieModel> movieModels = new ArrayList<>();
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        String img_path_url = "https://image.tmdb.org/t/p/w500";
+
+        protected  ParseDBURL(){
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            StringBuilder current = new StringBuilder();
+            HttpsURLConnection connection = null;
+            InputStreamReader inputStreamReader;
+            try{
+                URL url = new URL(params[0]);
+                connection = (HttpsURLConnection) url.openConnection();
+
+                InputStream stream = connection.getInputStream();
+                inputStreamReader = new InputStreamReader(stream);
+
+                int data = inputStreamReader.read();
+                while(data != -1){
+                    current.append((char) data);
+                    data = inputStreamReader.read();
+                }
+                Log.d("asdf", "doInBackground");
+                return current.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally{
+                if(connection != null){
+                    connection.disconnect();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //Bitmap bitmap = null;
+            try {
+                JSONObject obj = new JSONObject(s);
+                JSONArray movies = obj.getJSONArray("results");
+
+                for(int i=0; i< movies.length(); i++){
+                    JSONObject object = movies.getJSONObject(i);
+
+                    String title = object.getString("title");
+                    String date = object.getString("release_date");
+                    String img_path = img_path_url + object.getString("poster_path");
+
+                    MovieModel model = new MovieModel();
+                    model.setTitle(title);
+                    model.setRelease_date(date);
+                    model.setImg_path(img_path);
+                    // Log.d("adf", img_path);
+                    movieModels.add(model);
+
+                }
+
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                MoviesAdapter adapter = new MoviesAdapter(MainActivity.this, movieModels);
+                recyclerView.setAdapter(adapter);
+                Log.d("adf", "adapter");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
     }
 }
