@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v)
         {
-            Toast.makeText(MainActivity.this, String.valueOf(this.genre_code), Toast.LENGTH_SHORT).show();
+            ParseDBURLForField parseDBURLForField = new ParseDBURLForField();
+            parseDBURLForField.execute(movie_db_genres + this.genre_code);
+            Log.d("error", movie_db_genres + this.genre_code);
         }
     }
 
@@ -92,6 +95,85 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private class ParseDBURLForField extends AsyncTask<String, String, String> {
+        ArrayList<MovieFieldModel> movieFieldModels = new ArrayList<>();
+        RecyclerView recyclerViewForField = findViewById(R.id.recyclerViewForField);
+        String img_path_url = "https://image.tmdb.org/t/p/w500";
+
+        protected  ParseDBURLForField(){
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            StringBuilder current = new StringBuilder();
+            HttpsURLConnection connection = null;
+            InputStreamReader inputStreamReader;
+            try{
+                URL url = new URL(params[0]);
+                connection = (HttpsURLConnection) url.openConnection();
+
+                InputStream stream = connection.getInputStream();
+                inputStreamReader = new InputStreamReader(stream);
+
+                int data = inputStreamReader.read();
+                while(data != -1){
+                    current.append((char) data);
+                    data = inputStreamReader.read();
+                }
+                Log.d("asdf", "doInBackground");
+                return current.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally{
+                if(connection != null){
+                    connection.disconnect();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                JSONObject obj = new JSONObject(s);
+                JSONArray movies = obj.getJSONArray("results");
+
+                for(int i=0; i< movies.length(); i++){
+                    JSONObject object = movies.getJSONObject(i);
+
+                    String img_path = img_path_url + object.getString("poster_path");
+
+                    MovieFieldModel model = new MovieFieldModel();
+                    model.setImg_path(img_path);
+                    // Log.d("adf", img_path);
+                    movieFieldModels.add(model);
+
+                }
+
+                //linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                // recyclerViewForField.setLayoutManager(linearLayoutManager);
+                int numberOfColumns = 3;
+                recyclerViewForField.setLayoutManager(new GridLayoutManager(MainActivity.this, numberOfColumns));
+
+                MovieFieldsAdapter adapter = new MovieFieldsAdapter(MainActivity.this, movieFieldModels);
+                recyclerViewForField.setAdapter(adapter);
+                Log.d("adf", "adapter");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
     }
 
     private class ParseDBURL extends AsyncTask<String, String, String> {

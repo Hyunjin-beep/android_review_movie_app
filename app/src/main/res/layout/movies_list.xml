@@ -4,36 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="350dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="159dp"
-            android:layout_height="wrap_content"
 
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="126dp"
-            android:layout_marginTop="180dp"
-            android:text="Title"
-            android:textSize="20sp" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/tv_title"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="28dp"-->
+        <!--            android:layout_marginTop="200dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="Title"-->
+        <!--            android:textSize="20sp" />-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/iv_cover"-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_marginTop="48dp"-->
+        <!--            android:layout_marginEnd="257dp"-->
+        <!--            android:gravity="center"-->
+        <!--            tools:ignore="ImageContrastCheck"-->
+        <!--            tools:srcCompat="@tools:sample/avatars" />-->
 
         <ImageView
             android:id="@+id/iv_cover"
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="38dp"
-            tools:ignore="ImageContrastCheck"
+            android:layout_marginTop="58dp"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="210dp"
+            android:text="TextView"
+            android:textSize="20sp" />
     </RelativeLayout>
 
 
