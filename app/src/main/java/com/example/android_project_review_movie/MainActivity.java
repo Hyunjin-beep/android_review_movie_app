@@ -17,8 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -112,33 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-
-            StringBuilder current = new StringBuilder();
-            HttpsURLConnection connection = null;
-            InputStreamReader inputStreamReader;
-            try{
-                URL url = new URL(params[0]);
-                connection = (HttpsURLConnection) url.openConnection();
-
-                InputStream stream = connection.getInputStream();
-                inputStreamReader = new InputStreamReader(stream);
-
-                int data = inputStreamReader.read();
-                while(data != -1){
-                    current.append((char) data);
-                    data = inputStreamReader.read();
-                }
-                Log.d("asdf", "doInBackground");
-                return current.toString();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally{
-                if(connection != null){
-                    connection.disconnect();
-                }
-            }
-            return null;
+            return ParsingJSON(params);
         }
 
         @Override
@@ -159,14 +131,11 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-                //linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                // recyclerViewForField.setLayoutManager(linearLayoutManager);
                 int numberOfColumns = 3;
                 recyclerViewForField.setLayoutManager(new GridLayoutManager(MainActivity.this, numberOfColumns));
 
                 MovieFieldsAdapter adapter = new MovieFieldsAdapter(MainActivity.this, movieFieldModels);
                 recyclerViewForField.setAdapter(adapter);
-                Log.d("adf", "adapter");
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -194,32 +163,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            StringBuilder current = new StringBuilder();
-            HttpsURLConnection connection = null;
-            InputStreamReader inputStreamReader;
-            try{
-                URL url = new URL(params[0]);
-                connection = (HttpsURLConnection) url.openConnection();
-
-                InputStream stream = connection.getInputStream();
-                inputStreamReader = new InputStreamReader(stream);
-
-                int data = inputStreamReader.read();
-                while(data != -1){
-                    current.append((char) data);
-                    data = inputStreamReader.read();
-                }
-                Log.d("asdf", "doInBackground");
-                return current.toString();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally{
-                if(connection != null){
-                    connection.disconnect();
-                }
-            }
-            return null;
+            return ParsingJSON(params);
         }
 
         @Override
@@ -259,5 +203,33 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public String ParsingJSON(String... params){
+        StringBuilder current = new StringBuilder();
+        HttpsURLConnection connection = null;
+        InputStreamReader inputStreamReader;
+        try{
+            URL url = new URL(params[0]);
+            connection = (HttpsURLConnection) url.openConnection();
+
+            InputStream stream = connection.getInputStream();
+            inputStreamReader = new InputStreamReader(stream);
+
+            int data = inputStreamReader.read();
+            while(data != -1){
+                current.append((char) data);
+                data = inputStreamReader.read();
+            }
+            return current.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally{
+            if(connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
     }
 }

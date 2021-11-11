@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/activity_my_account.xml" value="0.4" />
+        <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/movie_field_list.xml" value="0.21557971014492755" />
         <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/movie_list.xml" value="0.72" />
         <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/movies_list.xml" value="0.25416666666666665" />
