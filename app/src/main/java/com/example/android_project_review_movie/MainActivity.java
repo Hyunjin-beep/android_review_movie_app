@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +27,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private String movie_db_genres = "https://api.themoviedb.org/3/discover/movie?api_key=a7dab8c476fb31214a42e7867fa023b2&with_genres=";
 
     Button btn_action, btn_drama, btn_comedy, btn_fantasy, btn_mystery;
+    ImageView iv_cover;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,11 +127,18 @@ public class MainActivity extends AppCompatActivity {
                 for(int i=0; i< movies.length(); i++){
                     JSONObject object = movies.getJSONObject(i);
 
+                    String title = object.getString("title");
+                    String date = object.getString("release_date");
                     String img_path = img_path_url + object.getString("poster_path");
+                    String id = object.getString("id");
+                    String overview = object.getString("overview");
 
                     MovieFieldModel model = new MovieFieldModel();
+                    model.setTitle(title);
+                    model.setRelease_date(date);
                     model.setImg_path(img_path);
-                    // Log.d("adf", img_path);
+                    model.setId(id);
+                    model.setOverview(overview);
                     movieFieldModels.add(model);
 
                 }
@@ -137,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
                 MovieFieldsAdapter adapter = new MovieFieldsAdapter(MainActivity.this, movieFieldModels);
                 recyclerViewForField.setAdapter(adapter);
+
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -180,11 +193,15 @@ public class MainActivity extends AppCompatActivity {
                     String title = object.getString("title");
                     String date = object.getString("release_date");
                     String img_path = img_path_url + object.getString("poster_path");
+                    String id = object.getString("id");
+                    String overview = object.getString("overview");
 
                     MovieModel model = new MovieModel();
                     model.setTitle(title);
                     model.setRelease_date(date);
                     model.setImg_path(img_path);
+                    model.setId(id);
+                    model.setOverview(overview);
                     // Log.d("adf", img_path);
                     movieModels.add(model);
 
@@ -196,6 +213,17 @@ public class MainActivity extends AppCompatActivity {
 
                 MoviesAdapter adapter = new MoviesAdapter(MainActivity.this, movieModels);
                 recyclerView.setAdapter(adapter);
+
+                adapter.setOnItemClickListener(new MoviesAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Log.d("qwe", String.valueOf(movieModels.get(position).getID()));
+                        Intent intent = new Intent(MainActivity.this, MovieDetail.class);
+
+                        intent.putExtra("key", movieModels.get(position));
+                        startActivity(intent);
+                    }
+                });
                 Log.d("adf", "adapter");
 
             } catch (JSONException e) {

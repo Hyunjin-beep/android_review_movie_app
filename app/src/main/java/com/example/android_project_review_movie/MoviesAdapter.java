@@ -18,6 +18,15 @@ import java.util.List;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<MovieModel> movieModels;
+    private OnItemClickListener mClickListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mClickListener = listener;
+    }
 
     public MoviesAdapter(Context context, ArrayList<MovieModel> movieModels) {
         this.context = context;
@@ -28,6 +37,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 //        this.movieModels = movieModels;
 //    }
 
+
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,7 +46,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         LayoutInflater inflater =LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.movies_list, parent, false);
 
-        return new MyViewHolder(convertView);
+        return new MyViewHolder(convertView, mClickListener);
     }
 
     @Override
@@ -55,11 +66,23 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         TextView title;
         ImageView ivCover;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             title = itemView.findViewById(R.id.tv_title);
             ivCover = itemView.findViewById(R.id.iv_cover);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
