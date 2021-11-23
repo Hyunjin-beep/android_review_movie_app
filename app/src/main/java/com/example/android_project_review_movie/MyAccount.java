@@ -6,6 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MyAccount extends AppCompatActivity {
 
@@ -17,7 +21,9 @@ public class MyAccount extends AppCompatActivity {
         Toolbar myToolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
+        Toast.makeText(MyAccount.this, "Uid: " + firebaseUser.getUid(), Toast.LENGTH_SHORT).show();
     }
 
 //    @Override
