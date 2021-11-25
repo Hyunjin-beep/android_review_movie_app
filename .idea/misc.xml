@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2703125" />
+        <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.2703125" />
+        <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
         <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Hyunjin Cho/AndroidStudioProjects/Android_Project_Review_Movie/app/src/main/res/layout/activity_movie_detail.xml" value="0.4" />

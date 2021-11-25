@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,20 +27,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MovieDetail extends AppCompatActivity {
 
     ImageView iv_cover_detail;
     EditText et_add_comment;
     TextView tv_content_detail, tv_date, tv_title_detail, tv_userEmail;
-    Button btn_playlist, btn_add_comment;
+    Button btn_playlist, btn_add_comment, btn_remove;
 
     String content, title, date, img_path, id, userID, userName;
 
     //root
     FirebaseDatabase rootNode;
     //sub
-    DatabaseReference reference;
+    DatabaseReference reference, playRef;
+
+    ArrayList<Comment> comments;
+    static String COMMENT_KEY_DB = "Comments";
+    static String PLAYLIST_KEY_DB = "Playlist";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +57,7 @@ public class MovieDetail extends AppCompatActivity {
         et_add_comment = findViewById(R.id.et_add_comment);
         tv_userEmail = findViewById(R.id.tv_userEmail);
         btn_add_comment = findViewById(R.id.btn_add_comment);
+        btn_remove = findViewById(R.id.btn_remove);
 
 
         if(getIntent().hasExtra("key")) {
@@ -81,7 +89,7 @@ public class MovieDetail extends AppCompatActivity {
         Glide.with(MovieDetail.this).load(img_path).into(iv_cover_detail);
 
         btn_playlist = findViewById(R.id.btn_playlist);
-        btn_playlist.setOnClickListener(addMovieToList);
+
 
         //user infor
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -90,49 +98,99 @@ public class MovieDetail extends AppCompatActivity {
         userName = firebaseUser.getEmail();
         tv_userEmail.setText(userName);
 
-        btn_add_comment.setOnClickListener(addComment);
+        rootNode = FirebaseDatabase.getInstance();
+        DatabaseReference playcheckref = rootNode.getReference().child(PLAYLIST_KEY_DB).child(userID);
+        playcheckref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if(Objects.requireNonNull(dataSnapshot.getValue(Playlist.class)).getmID().equals(id)){
+                        btn_playlist.setVisibility(View.INVISIBLE);
+                        btn_playlist.setEnabled(false);
+                        btn_remove.setVisibility(View.VISIBLE);
+                        btn_remove.setEnabled(true);
 
+                        String vID = Objects.requireNonNull(dataSnapshot.getValue(Playlist.class)).getvID();
+                        btn_remove.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                btn_playlist.setVisibility(View.VISIBLE);
+                                btn_playlist.setEnabled(true);
+                                btn_remove.setVisibility(View.INVISIBLE);
+                                btn_remove.setEnabled(false);
+
+                                DatabaseReference removeRef = rootNode.getReference("Playlist").child(userID).child(vID);
+                                removeRef.setValue(null);
+
+                                Toast.makeText(MovieDetail.this, "Successfully deleted" + Objects.requireNonNull(dataSnapshot.getValue(Playlist.class)).getvID(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    } else{
+                        btn_playlist.setOnClickListener(addMovieToList);
+                    }
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        btn_add_comment.setOnClickListener(addComment);
+        btn_playlist.setOnClickListener(addMovieToList);
 
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
+        ListView lv_comment = findViewById(R.id.lv_Listview);
+
         rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("Comments");
+        DatabaseReference commentRef = rootNode.getReference(COMMENT_KEY_DB).child(id);
 
-        ListView lv_comment = (ListView) findViewById(R.id.lv_Listview);
-        ArrayList<User> userArrayList = new ArrayList<>();
-
-        reference.addValueEventListener(new ValueEventListener() {
+        commentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                comments = new ArrayList<>();
                 for(DataSnapshot childSnapshot : snapshot.getChildren()){
-                    User user = childSnapshot.getValue(User.class);
-                    userArrayList.add(user);
+                    Comment comment = childSnapshot.getValue(Comment.class);
+                    comments.add(comment);
                 }
-                CommentAdapter adapter = new CommentAdapter(MovieDetail.this, R.layout.comment_list, userArrayList);
+                CommentAdapter adapter = new CommentAdapter(MovieDetail.this, R.layout.comment_list, comments);
                 lv_comment.setAdapter(adapter);
-            }
 
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MovieDetail.this, "Failed", Toast.LENGTH_SHORT).show();
+
             }
         });
 
-
-
     }
+
 
     private final View.OnClickListener addMovieToList = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            rootNode = FirebaseDatabase.getInstance();
-            reference = rootNode.getReference("Playlist");
+            playRef = rootNode.getReference("Playlist").child(userID).push();
 
-            User user = new User(userID, id);
-            reference.child(userID).setValue(user);
+            Playlist playlist = new Playlist(id, userID, img_path, playRef.getKey());
+
+            playRef.setValue(playlist).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(MovieDetail.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                    btn_playlist.setVisibility(View.INVISIBLE);
+                    btn_playlist.setEnabled(false);
+                    btn_remove.setVisibility(View.VISIBLE);
+                    btn_remove.setEnabled(true);
+                }
+            });
 
         }
     };
@@ -140,14 +198,21 @@ public class MovieDetail extends AppCompatActivity {
     private final View.OnClickListener addComment = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String comment = et_add_comment.getText().toString();
-            rootNode = FirebaseDatabase.getInstance();
-            reference = rootNode.getReference("Comments");
 
-            User user = new User(userID, userName, comment, id);
+            btn_add_comment.setVisibility(View.INVISIBLE);
+            reference = rootNode.getReference(COMMENT_KEY_DB).child(id).push();
+            String content = et_add_comment.getText().toString();
+            Comment comment = new Comment(content, userID, id, userName);
 
-            reference.child(userID).setValue(user);
-            Log.d("hc", id);
+            reference.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(MovieDetail.this, "comment added", Toast.LENGTH_SHORT).show();
+                    et_add_comment.setText("");
+                    btn_add_comment.setVisibility(View.VISIBLE);
+                }
+            });
+
         }
     };
 

@@ -34,71 +34,12 @@
             android:text="Reviewed Movies"
             android:textSize="25dp" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="131dp"
-            android:layout_marginTop="161dp"
-            android:layout_marginEnd="-12dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="85dp"
-                    android:layout_height="92dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="85dp"
-                    android:layout_height="92dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="85dp"
-                    android:layout_height="92dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <ImageButton
-                    android:id="@+id/imageButton4"
-                    android:layout_width="85dp"
-                    android:layout_height="92dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <ImageButton
-                    android:id="@+id/imageButton5"
-                    android:layout_width="85dp"
-                    android:layout_height="92dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    tools:srcCompat="@tools:sample/avatars" />
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewViewed"
+            android:layout_width="391dp"
+            android:layout_height="178dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="130dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -117,73 +58,12 @@
                 android:text="Wanna List"
                 android:textSize="25dp" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="131dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="112dp"
-                android:layout_marginEnd="0dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/imageButton_list"
-                        android:layout_width="85dp"
-                        android:layout_height="92dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="SpeakableTextPresentCheck"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton2_list"
-                        android:layout_width="85dp"
-                        android:layout_height="92dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="SpeakableTextPresentCheck"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton3_list"
-                        android:layout_width="85dp"
-                        android:layout_height="92dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="SpeakableTextPresentCheck"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton4_list"
-                        android:layout_width="85dp"
-                        android:layout_height="92dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="SpeakableTextPresentCheck"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton5_list"
-                        android:layout_width="85dp"
-                        android:layout_height="92dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="SpeakableTextPresentCheck"
-                        tools:srcCompat="@tools:sample/avatars" />
-                </LinearLayout>
-
-
-            </HorizontalScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPlayList"
+                android:layout_width="391dp"
+                android:layout_height="178dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="100dp" />
 
 
         </RelativeLayout>

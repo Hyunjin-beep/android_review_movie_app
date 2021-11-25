@@ -12,15 +12,16 @@ import androidx.annotation.Nullable;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CommentAdapter extends ArrayAdapter<User> {
+public class CommentAdapter extends ArrayAdapter<Comment> {
 
     private final Context context;
     private final int comment_layoutID;
 
-    public CommentAdapter(@NonNull Context context, int comment_layoutID, @NonNull List<User> users) {
-        super(context, comment_layoutID, users);
+    public CommentAdapter(@NonNull Context context, int comment_layoutID, @NonNull ArrayList<Comment> comments) {
+        super(context, comment_layoutID, comments);
         this.context = context;
         this.comment_layoutID = comment_layoutID;
     }
@@ -34,13 +35,13 @@ public class CommentAdapter extends ArrayAdapter<User> {
 
         }
 
-        User user = getItem(position);
+        Comment comment = getItem(position);
 
         TextView tv_userEmail_comment = convertView.findViewById(R.id.tv_userEmail_comment);
         TextView tv_comment_comment = convertView.findViewById(R.id.tv_comment_comment);
 
-        tv_userEmail_comment.setText(user.getUserEmail());
-        tv_comment_comment.setText(user.getComment());
+        tv_userEmail_comment.setText(comment.getUserEmail());
+        tv_comment_comment.setText(comment.getContent());
 
         return convertView;
 
