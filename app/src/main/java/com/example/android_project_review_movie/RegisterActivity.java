@@ -41,6 +41,13 @@ public class RegisterActivity extends AppCompatActivity {
         btn_register = findViewById(R.id.btn_register);
         tv_alert = findViewById(R.id.tv_alert);
 
+        tv_alert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            }
+        });
+
         firbaseAuth = FirebaseAuth.getInstance();
 
 

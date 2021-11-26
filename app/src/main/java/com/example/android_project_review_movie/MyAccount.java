@@ -7,9 +7,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +37,11 @@ public class MyAccount extends AppCompatActivity {
     DatabaseReference playRef;
 
     ArrayList<Playlist> playlistArrayList;
+    Button btn_logout;
 
+    TextView tv_userEmail_account;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +50,15 @@ public class MyAccount extends AppCompatActivity {
         Toolbar myToolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        btn_logout = findViewById(R.id.btn_logout);
+
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
         String uID = firebaseUser.getUid();
         //Toast.makeText(MyAccount.this, "Uid: " + firebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+
+        tv_userEmail_account = findViewById(R.id.tv_userEmail_account);
+        tv_userEmail_account.setText(firebaseUser.getEmail() + "!");
 
 
         RecyclerView recyclerViewPlaylist = findViewById(R.id.recyclerViewPlayList);
@@ -73,6 +89,15 @@ public class MyAccount extends AppCompatActivity {
             }
         });
 
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MyAccount.this, MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(MyAccount.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
@@ -81,7 +106,9 @@ public class MyAccount extends AppCompatActivity {
 
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item){
-//
+//        if(item.getItemId() == R.id.menu_setting){
+//            Intent intent = new Intent(MyAccount.this, )
+//        }
 //    }
 
     @Override
