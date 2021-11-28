@@ -1,5 +1,6 @@
 package com.example.android_project_review_movie;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,16 +29,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MyAccount extends AppCompatActivity {
 
     //root
     FirebaseDatabase rootNode;
     //sub
-    DatabaseReference playRef;
+    DatabaseReference playRef, reference;
 
-    ArrayList<Playlist> playlistArrayList;
+    ArrayList<Playlist> playlistArrayList, reviewedArrayList;
+    ArrayList<String> movieIDArrayList;
+
     Button btn_logout;
 
     TextView tv_userEmail_account;
@@ -99,10 +106,38 @@ public class MyAccount extends AppCompatActivity {
             }
         });
 
+        RecyclerView recyclerViewReviewed = findViewById(R.id.recyclerViewViewed);
+        LinearLayoutManager linearLayoutManagerForReviewed = new LinearLayoutManager(getApplicationContext());
+        reference = rootNode.getReference("CommentUnderUserID").child(uID);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reviewedArrayList = new ArrayList<>();
+                for(DataSnapshot childSnapshot: snapshot.getChildren()){
+                    Playlist playlist = childSnapshot.getValue(Playlist.class);
+
+                   reviewedArrayList.add(playlist);
+                }
+
+                linearLayoutManagerForReviewed.setOrientation(LinearLayoutManager.HORIZONTAL);
+                recyclerViewReviewed.setLayoutManager(linearLayoutManagerForReviewed);
+                recyclerViewReviewed.setItemAnimator(new DefaultItemAnimator());
+
+                PlayListAdapter playListAdapterForReviewed = new PlayListAdapter(MyAccount.this, reviewedArrayList);
+                recyclerViewReviewed.setAdapter(playListAdapterForReviewed);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
     }
+
+
 
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item){

@@ -27,6 +27,10 @@ public class Comment  implements Parcelable {
         this.reply = reply;
     }
 
+    public Comment(String movieID){
+        this.movieID = movieID;
+    }
+
     public Comment(String content, String uID, String movieID, String userEmail, String contentID) {
         this.content = content;
         this.uID = uID;

@@ -43,7 +43,7 @@ public class MovieDetail extends AppCompatActivity {
     //root
     FirebaseDatabase rootNode;
     //sub
-    DatabaseReference reference, playRef;
+    DatabaseReference reference, playRef, userIDCommentref;
 
     ArrayList<Comment> comments;
     static String COMMENT_KEY_DB = "Comments";
@@ -231,6 +231,15 @@ public class MovieDetail extends AppCompatActivity {
                     Toast.makeText(MovieDetail.this, "comment added", Toast.LENGTH_SHORT).show();
                     et_add_comment.setText("");
                     btn_add_comment.setVisibility(View.VISIBLE);
+                }
+            });
+
+            Playlist playlist = new Playlist(id, userID, img_path, key);
+            userIDCommentref = rootNode.getReference("CommentUnderUserID").child(userID).push();
+            userIDCommentref.setValue(playlist).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(MovieDetail.this, "comment added under UserID", Toast.LENGTH_SHORT).show();
                 }
             });
 
