@@ -7,8 +7,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -164,6 +166,24 @@ public class MovieDetail extends AppCompatActivity {
                 CommentAdapter adapter = new CommentAdapter(MovieDetail.this, R.layout.comment_list, comments);
                 lv_comment.setAdapter(adapter);
 
+                lv_comment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("test", comments.get(position).getUserEmail());
+                        String email = comments.get(position).getUserEmail();
+                        String comment = comments.get(position).getContent();
+
+                        Intent intent = new Intent(MovieDetail.this, ReplyComment.class);
+//                        Bundle extras = new Bundle();
+//                        extras.putString("email", email);
+//                        extras.putString("comment", comment);
+                        intent.putExtra("comment", comments.get(position));
+
+                        startActivity(intent);
+                        //Toast.makeText(MovieDetail.this, "clicked"+email+comment, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -202,7 +222,8 @@ public class MovieDetail extends AppCompatActivity {
             btn_add_comment.setVisibility(View.INVISIBLE);
             reference = rootNode.getReference(COMMENT_KEY_DB).child(id).push();
             String content = et_add_comment.getText().toString();
-            Comment comment = new Comment(content, userID, id, userName);
+            String key = reference.getKey();
+            Comment comment = new Comment(content, userID, id, userName, key);
 
             reference.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
