@@ -1,6 +1,5 @@
 package com.example.android_project_review_movie;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,10 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MyAccount extends AppCompatActivity {
@@ -42,7 +37,8 @@ public class MyAccount extends AppCompatActivity {
     DatabaseReference playRef, reference;
 
     ArrayList<Playlist> playlistArrayList, reviewedArrayList;
-    ArrayList<String> movieIDArrayList;
+    ArrayList<String> movieIDArrayList, checkArrayList;
+    ArrayList<Playlist> newList;
 
     Button btn_logout;
 
@@ -113,17 +109,28 @@ public class MyAccount extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 reviewedArrayList = new ArrayList<>();
+                movieIDArrayList = new ArrayList<>();
+                newList = new ArrayList<>();
                 for(DataSnapshot childSnapshot: snapshot.getChildren()){
                     Playlist playlist = childSnapshot.getValue(Playlist.class);
+                    reviewedArrayList.add(playlist);
 
-                   reviewedArrayList.add(playlist);
+                    for(int i=0; i < reviewedArrayList.size(); i++){
+                        String mID = reviewedArrayList.get(i).mID;
+                        if(!movieIDArrayList.contains(mID)){
+                            movieIDArrayList.add(mID);
+                            newList.add(reviewedArrayList.get(i));
+                        }
+                    }
+
                 }
+
 
                 linearLayoutManagerForReviewed.setOrientation(LinearLayoutManager.HORIZONTAL);
                 recyclerViewReviewed.setLayoutManager(linearLayoutManagerForReviewed);
                 recyclerViewReviewed.setItemAnimator(new DefaultItemAnimator());
 
-                PlayListAdapter playListAdapterForReviewed = new PlayListAdapter(MyAccount.this, reviewedArrayList);
+                PlayListAdapter playListAdapterForReviewed = new PlayListAdapter(MyAccount.this, newList);
                 recyclerViewReviewed.setAdapter(playListAdapterForReviewed);
             }
 
@@ -137,14 +144,20 @@ public class MyAccount extends AppCompatActivity {
 
     }
 
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item){
-//        if(item.getItemId() == R.id.menu_setting){
-//            Intent intent = new Intent(MyAccount.this, )
+//    public static <String> ArrayList<String> removeDuplicates(ArrayList<String> list){
+//        ArrayList<String> newList = new ArrayList<>();
+//
+//        for(String element : list){
+//            if(!newList.contains(element)){
+//                newList.add(element);
+//            }
+//
 //        }
+//
+//        return newList;
+//
 //    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

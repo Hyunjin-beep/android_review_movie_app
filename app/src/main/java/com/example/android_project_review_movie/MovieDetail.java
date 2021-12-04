@@ -28,7 +28,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MovieDetail extends AppCompatActivity {
@@ -169,18 +174,11 @@ public class MovieDetail extends AppCompatActivity {
                 lv_comment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("test", comments.get(position).getUserEmail());
-                        String email = comments.get(position).getUserEmail();
-                        String comment = comments.get(position).getContent();
-
                         Intent intent = new Intent(MovieDetail.this, ReplyComment.class);
-//                        Bundle extras = new Bundle();
-//                        extras.putString("email", email);
-//                        extras.putString("comment", comment);
+
                         intent.putExtra("comment", comments.get(position));
 
                         startActivity(intent);
-                        //Toast.makeText(MovieDetail.this, "clicked"+email+comment, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -223,7 +221,14 @@ public class MovieDetail extends AppCompatActivity {
             reference = rootNode.getReference(COMMENT_KEY_DB).child(id).push();
             String content = et_add_comment.getText().toString();
             String key = reference.getKey();
-            Comment comment = new Comment(content, userID, id, userName, key);
+
+            Calendar calendar = Calendar.getInstance();
+            DateFormat df = new SimpleDateFormat("d MMM yyyy h:mm a", Locale.getDefault());
+            String date = df.format(calendar.getTime());
+
+
+
+            Comment comment = new Comment(content, userID, id, userName, key, date);
 
             reference.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override

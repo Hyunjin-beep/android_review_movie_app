@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Reply implements Parcelable {
-    String reply, uID, movieID, userEmail, originalID, replyID;
+    String reply, uID, movieID, userEmail, originalID, replyID, date;
 
     Reply(){
 
@@ -17,6 +17,7 @@ public class Reply implements Parcelable {
         userEmail = in.readString();
         originalID = in.readString();
         replyID = in.readString();
+        date = in.readString();
     }
 
     public static final Creator<Reply> CREATOR = new Creator<Reply>() {
@@ -46,6 +47,24 @@ public class Reply implements Parcelable {
         this.userEmail = userEmail;
         this.originalID = originalID;
         this.replyID = replyID;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Reply(String reply, String uID, String movieID, String userEmail, String originalID, String replyID, String date) {
+        this.reply = reply;
+        this.uID = uID;
+        this.movieID = movieID;
+        this.userEmail = userEmail;
+        this.originalID = originalID;
+        this.replyID = replyID;
+        this.date = date;
     }
 
     public String getReply() {
@@ -104,6 +123,7 @@ public class Reply implements Parcelable {
         dest.writeString(movieID);
         dest.writeString(userEmail);
         dest.writeString(originalID);
+        dest.writeString(date);
         dest.writeString(replyID);
     }
 }

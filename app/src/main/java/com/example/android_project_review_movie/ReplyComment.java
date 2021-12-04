@@ -21,7 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ReplyComment extends AppCompatActivity {
 
@@ -111,7 +115,11 @@ public class ReplyComment extends AppCompatActivity {
             String content = et_add_comment_reply.getText().toString();
             String replyKey = reference.getKey();
 
-            Reply reply = new Reply(content, userID, comment.getMovieID(), userName, key, replyKey);
+            Calendar calendar = Calendar.getInstance();
+            DateFormat df = new SimpleDateFormat("d MMM yyyy h:mm a", Locale.getDefault());
+            String date = df.format(calendar.getTime());
+
+            Reply reply = new Reply(content, userID, comment.getMovieID(), userName, key, replyKey, date);
 
             reference.setValue(reply).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override

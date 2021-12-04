@@ -10,8 +10,8 @@
         android:layout_height="91dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="63dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="84dp"
         android:text="TextView"
         android:textSize="20sp" />
 
@@ -35,5 +35,15 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="26dp"
         android:drawableLeft="@drawable/ic_baseline_subdirectory_arrow_right_24" />
+
+    <TextView
+        android:id="@+id/tv_date_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="47dp"
+        android:text="TextView" />
 
 </RelativeLayout>

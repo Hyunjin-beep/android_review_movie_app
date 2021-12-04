@@ -39,9 +39,11 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
         TextView tv_userEmail_comment = convertView.findViewById(R.id.tv_userEmail_comment);
         TextView tv_comment_comment = convertView.findViewById(R.id.tv_comment_comment);
+        TextView tv_time_comment = convertView.findViewById(R.id.tv_time_comment);
 
         tv_userEmail_comment.setText(comment.getUserEmail());
         tv_comment_comment.setText(comment.getContent());
+        tv_time_comment.setText(comment.getDate());
 
         return convertView;
 

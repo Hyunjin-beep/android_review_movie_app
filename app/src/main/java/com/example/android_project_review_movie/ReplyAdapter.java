@@ -38,9 +38,11 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
 
         TextView tv_email_reply = convertView.findViewById(R.id.tv_email_reply_reply);
         TextView tv_comment_reply = convertView.findViewById(R.id.tv_comment_reply_reply);
+        TextView tv_date_reply = convertView.findViewById(R.id.tv_date_reply);
 
         tv_email_reply.setText(reply.getUserEmail());
         tv_comment_reply.setText(reply.getReply());
+        tv_date_reply.setText(reply.getDate());
         return convertView;
     }
 }

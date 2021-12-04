@@ -3,20 +3,13 @@ package com.example.android_project_review_movie;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Comment  implements Parcelable {
-    String content, uID, movieID, userEmail, contentID;
-    Object timestamp;
-    Reply reply;
+import java.util.Date;
 
-    public Comment(String content, String uID, String movieID, String userEmail, String contentID, Object timestamp, Reply reply) {
-        this.content = content;
-        this.uID = uID;
-        this.movieID = movieID;
-        this.userEmail = userEmail;
-        this.contentID = contentID;
-        this.timestamp = timestamp;
-        this.reply = reply;
-    }
+public class Comment  implements Parcelable {
+    String content, uID, movieID, userEmail, contentID, date;
+    Object timestamp;
+
+    Reply reply;
 
     public Comment(String content, String uID, String movieID, String userEmail, String contentID, Reply reply) {
         this.content = content;
@@ -39,12 +32,30 @@ public class Comment  implements Parcelable {
         this.contentID = contentID;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Comment(String content, String uID, String movieID, String userEmail, String contentID, String date) {
+        this.content = content;
+        this.uID = uID;
+        this.movieID = movieID;
+        this.userEmail = userEmail;
+        this.contentID = contentID;
+        this.date = date;
+    }
+
     protected Comment(Parcel in) {
         content = in.readString();
         uID = in.readString();
         movieID = in.readString();
         userEmail = in.readString();
         contentID = in.readString();
+        date = in.readString();
         reply = in.readParcelable(Reply.class.getClassLoader());
     }
 
@@ -132,6 +143,7 @@ public class Comment  implements Parcelable {
         dest.writeString(movieID);
         dest.writeString(userEmail);
         dest.writeString(contentID);
+        dest.writeString(date);
         dest.writeParcelable(reply, flags);
     }
 }
