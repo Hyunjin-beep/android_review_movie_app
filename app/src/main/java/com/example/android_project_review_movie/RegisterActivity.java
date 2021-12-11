@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         if(firbaseAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), MyAccount.class));
+            startActivity(new Intent(getApplicationContext(), MyAccountTest.class));
             finish();
         }
 
@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                             assert firebaseUser != null;
-                            Toast.makeText(RegisterActivity.this, "Successfully created" + firebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Successfully created" + firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
 
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else{

@@ -62,7 +62,7 @@ public class MovieDetail extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         et_add_comment = findViewById(R.id.et_add_comment);
-        tv_userEmail = findViewById(R.id.tv_userEmail);
+        //tv_userEmail = findViewById(R.id.tv_userEmail);
         btn_add_comment = findViewById(R.id.btn_add_comment);
         btn_remove = findViewById(R.id.btn_remove);
 
@@ -103,7 +103,7 @@ public class MovieDetail extends AppCompatActivity {
         assert firebaseUser != null;
         userID = firebaseUser.getUid();
         userName = firebaseUser.getEmail();
-        tv_userEmail.setText(userName);
+        //tv_userEmail.setText(userName);
 
         rootNode = FirebaseDatabase.getInstance();
         DatabaseReference playcheckref = rootNode.getReference().child(PLAYLIST_KEY_DB).child(userID);
@@ -129,7 +129,7 @@ public class MovieDetail extends AppCompatActivity {
                                 DatabaseReference removeRef = rootNode.getReference("Playlist").child(userID).child(vID);
                                 removeRef.setValue(null);
 
-                                Toast.makeText(MovieDetail.this, "Successfully deleted" + Objects.requireNonNull(dataSnapshot.getValue(Playlist.class)).getvID(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MovieDetail.this, "Successfully deleted", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -138,8 +138,6 @@ public class MovieDetail extends AppCompatActivity {
                     }
                 }
             }
-
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -223,9 +221,8 @@ public class MovieDetail extends AppCompatActivity {
             String key = reference.getKey();
 
             Calendar calendar = Calendar.getInstance();
-            DateFormat df = new SimpleDateFormat("d MMM yyyy h:mm a", Locale.getDefault());
+            DateFormat df = new SimpleDateFormat("MMM d yyyy h:mm a", Locale.getDefault());
             String date = df.format(calendar.getTime());
-
 
 
             Comment comment = new Comment(content, userID, id, userName, key, date);
@@ -244,7 +241,7 @@ public class MovieDetail extends AppCompatActivity {
             userIDCommentref.setValue(playlist).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
-                    Toast.makeText(MovieDetail.this, "comment added under UserID", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MovieDetail.this, "comment added under UserID", Toast.LENGTH_SHORT).show();
                 }
             });
 

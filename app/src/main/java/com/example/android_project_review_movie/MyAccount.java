@@ -115,14 +115,14 @@ public class MyAccount extends AppCompatActivity {
                     Playlist playlist = childSnapshot.getValue(Playlist.class);
                     reviewedArrayList.add(playlist);
 
-                    for(int i=0; i < reviewedArrayList.size(); i++){
-                        String mID = reviewedArrayList.get(i).mID;
-                        if(!movieIDArrayList.contains(mID)){
-                            movieIDArrayList.add(mID);
-                            newList.add(reviewedArrayList.get(i));
-                        }
-                    }
+                }
 
+                for(int i=0; i < reviewedArrayList.size(); i++){
+                    String mID = reviewedArrayList.get(i).mID;
+                    if(!movieIDArrayList.contains(mID)){
+                        movieIDArrayList.add(mID);
+                        newList.add(reviewedArrayList.get(i));
+                    }
                 }
 
 

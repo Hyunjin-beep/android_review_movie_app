@@ -20,6 +20,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="291dp"
+        android:background="@drawable/shadow"
         android:orientation="vertical">
 
         <ImageView
@@ -28,31 +29,33 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="41dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="22dp"
             tools:ignore="ImageContrastCheck"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tv_title_detail"
-            android:layout_width="181dp"
-            android:layout_height="76dp"
+            android:layout_width="242dp"
+            android:layout_height="63dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="41dp"
-            android:layout_marginEnd="86dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="17dp"
             android:text="TextView"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_content_detail"
-            android:layout_width="235dp"
-            android:layout_height="116dp"
+            android:layout_width="379dp"
+            android:layout_height="82dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="154dp"
-            android:layout_marginTop="165dp"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="199dp"
             android:text="content information" />
+
+
 
         <Button
             android:id="@+id/btn_playlist"
@@ -60,12 +63,13 @@
             android:layout_height="32dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="41dp"
-            android:layout_marginEnd="17dp"
+            android:layout_marginTop="137dp"
+            android:layout_marginEnd="209dp"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/ic_baseline_add_24"
             android:gravity="center"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
         <Button
             android:id="@+id/btn_remove"
@@ -73,24 +77,23 @@
             android:layout_height="32dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="41dp"
-            android:layout_marginEnd="17dp"
+            android:layout_marginTop="137dp"
+            android:layout_marginEnd="209dp"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/ic_baseline_check_24"
             android:gravity="center"
             android:visibility="gone"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
+            android:layout_width="124dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="153dp"
-            android:layout_marginTop="133dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="110dp"
             android:text="date" />
-
 
 
     </RelativeLayout>
@@ -99,32 +102,27 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
+        android:background="@drawable/shadow"
         android:layout_marginEnd="0dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_userEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="2dp"
-            android:text="TextView"
-            android:textSize="15sp" />
+        <com.google.android.material.textfield.TextInputLayout
 
-        <EditText
-            android:id="@+id/et_add_comment"
-            android:layout_width="314dp"
-            android:layout_height="65dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="19dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="65dp"
             android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            android:hint="Leave comment">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_add_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_add_comment"
@@ -133,7 +131,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp"
             android:text="Add" />
 
     </RelativeLayout>
